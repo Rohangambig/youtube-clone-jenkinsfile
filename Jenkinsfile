@@ -6,8 +6,8 @@ pipeline {
 		stage('Checkout'){
 			
 			git (
-				branch:"${BRANCH}"
-				credentialsId:'GITHUB'
+				branch:"${BRANCH}",
+				credentialsId:'GITHUB',
 				url:'https://github.com/Rohangambig/youtube-clone-ui'
 			)			
 			
