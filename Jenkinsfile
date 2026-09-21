@@ -22,7 +22,7 @@ pipeline {
 		stage('Build app'){
 			
 			steps {
-				sh 'npm run build'
+				sh 'tsc -b && vite build'
 			}			
 
 		}	
