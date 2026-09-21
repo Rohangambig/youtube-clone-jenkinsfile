@@ -17,7 +17,24 @@ pipeline {
 			steps	{
 				sh 'npm install'
 			}
+		}
+
+		stage('Build app'){
+			
+			steps {
+				sh 'npm run build'
+			}			
+
 		}	
+
+		stage('Docker build') {
+			
+			steps {
+
+				sh 'docker build -t rohanambig/youtube-ui:${BUILD_NUMBER}-$(date +%Y%m%d%H%M%S) .'
+			}
+			
+		}
 
 	}
 	
