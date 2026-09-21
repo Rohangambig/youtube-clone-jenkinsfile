@@ -15,7 +15,7 @@ pipeline {
 
 		stage('Install') {
 			steps	{
-				sh 'npm install --omit=dev'
+				sh 'npm install'
 			}
 		}
 
