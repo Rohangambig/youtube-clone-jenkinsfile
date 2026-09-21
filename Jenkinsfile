@@ -11,6 +11,12 @@ pipeline {
 				url:'https://github.com/Rohangambig/youtube-clone-ui'
 			)			
 		}	
+		}
+
+		stage('Install') {
+			steps	{
+				sh 'npm install'
+			}
 		}	
 
 	}
