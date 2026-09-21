@@ -15,14 +15,14 @@ pipeline {
 
 		stage('Install') {
 			steps	{
-				sh 'npm install'
+				sh 'npm install --omit=dev'
 			}
 		}
 
 		stage('Build app'){
 			
 			steps {
-				sh 'tsc -b && vite build'
+				sh 'npm run build'
 			}			
 
 		}	
