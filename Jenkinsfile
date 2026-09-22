@@ -30,10 +30,38 @@ pipeline {
 		stage('Docker build') {
 			
 			steps {
+				app_image = "rohanambig/youtube-ui:${BUILD_NUMBER}-${sh(
+                		script: 'date +%Y%m%d%H%M%S',
+               			 returnStdout: true
+            			).trim()}"
 
-				sh 'docker build -t rohanambig/youtube-ui:${BUILD_NUMBER}-$(date +%Y%m%d%H%M%S) .'
+				sh 'docker build -t rohanambig/youtube-ui:${app_image}'
 			}
 			
+		}
+
+		stage('Pushing image to registry'){
+			steps {
+				withCredentials([
+					usernamePassword(
+						credentialsId:'DOCKER',
+						usernameVariable:'DOCKER_USERNAME'
+						passwordVariable:'DOCKER_PASSWORD'
+					)
+				]) {
+				
+					sh '''
+						echo "$DOCKER_PASSWORD" | docker login \
+            							-u "$DOCKER_USERNAME" \
+            								--password-stdin
+
+       							 docker push "$app_image"	
+
+        					docker logout
+					'''			
+		
+				}
+			}
 		}
 
 	}
