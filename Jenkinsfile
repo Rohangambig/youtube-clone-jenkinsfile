@@ -65,6 +65,18 @@ pipeline {
 				}
 			}
 		}
+		
+		stage('Checkout helm chart') {
+			steps{
+				dir('helm-chart') {
+					git(
+						branch:'youtube-ui',
+						credentialsId:'GITHUB',
+						url:'https://github.com/Rohangambig/youtube-helm-chart'
+					)
+				}
+			}
+		}
 
 	}
 	
