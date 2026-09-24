@@ -77,7 +77,17 @@ pipeline {
 				}
 			}
 		}
-
+		
+		  stage('Helm Upgrade') {
+            steps {
+                sh """
+                    helm upgrade --install youtube-frontend ./helm-chart \
+                        --set frontend.image.repository=rohanambig/youtube-ui \
+                        --set frontend.image.tag=${app_image.split(':')[1]}
+                """
+            }
+        }	
+	
 	}
 	
 }
