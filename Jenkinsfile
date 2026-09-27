@@ -7,7 +7,7 @@ pipeline {
 
 	stages {
 	
-		stage('Checkout'){
+		stage('GIT Checkout'){
 			steps {
 				git (
 					branch:"${BRANCH}",
