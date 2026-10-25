@@ -29,11 +29,13 @@ pipeline {
                             returnStdout: true
                         ).trim()
             
-                        env.APP_IMAGE = "rohanambig/youtube-user-service:${env.BUILD_NUMBER}-${timestamp}"
+                        def imageTag = "${env.BUILD_NUMBER}-${timestamp}"
+            
+                        env.APP_IMAGE = "rohanambig/youtube-user-service:${imageTag}"
             
                         echo "Docker image: ${env.APP_IMAGE}"
             
-                        sh 'docker build -t "$APP_IMAGE" .'
+                        sh "docker build -t ${env.APP_IMAGE} ."
                     }
                 }
             }
