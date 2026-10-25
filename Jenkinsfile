@@ -21,22 +21,22 @@ pipeline {
             }
         }
 
-        stage('Build Image') {
-            steps {
-                script {
-                    def timestamp = sh(
-                        script: 'date +%Y%m%d%H%M%S',
-                        returnStdout: true
-                    ).trim()
-
-                    // env.APP_IMAGE = "rohanambig/youtube-user-service:${env.BUILD_NUMBER}-${timestamp}"
-
-                    echo "Docker image: ${env.APP_IMAGE}"
-
-                    sh "docker build -t rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp} ."
+            stage('Build Image') {
+                steps {
+                    script {
+                        def timestamp = sh(
+                            script: 'date +%Y%m%d%H%M%S',
+                            returnStdout: true
+                        ).trim()
+            
+                        env.APP_IMAGE = "rohanambig/youtube-user-service:${env.BUILD_NUMBER}-${timestamp}"
+            
+                        echo "Docker image: ${env.APP_IMAGE}"
+            
+                        sh 'docker build -t "$APP_IMAGE" .'
+                    }
                 }
             }
-        }
 
         stage('Push Image') {
             steps {
