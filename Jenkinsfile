@@ -29,7 +29,7 @@ pipeline {
                         returnStdout: true
                     ).trim()
 
-                    env.APP_IMAGE = "rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp}"
+                    APP_IMAGE = "rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp}"
 
                     sh "docker build -t ${env.APP_IMAGE} ."
                 }
