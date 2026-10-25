@@ -5,6 +5,10 @@ pipeline {
 		}
 	}
 
+	environment {
+        APP_IMAGE = ''
+    }
+
 	stages {
 	
 		stage('GIT Checkout'){
@@ -25,9 +29,9 @@ pipeline {
               				  returnStdout: true
            				 ).trim()
 	
-        		    app_image = "rohanambig/youtube-ui:${BUILD_NUMBER}-${timestamp}"
+        		    env.APP_IMAGE = "rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp}"
 
-					sh 'docker build -t ${app_image} .'
+					sh "docker build -t ${env.APP_IMAGE} ."
 				}
 			}
 		}
@@ -42,13 +46,12 @@ pipeline {
 					)
 				]) {
 
-					sh """ 
-
+					sh '''
 						echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-						docker push ${app_image}
+						docker push ${env.APP_IMAGE}
 						docker logout
 
-					"""
+					'''
 
 				}
 			}
