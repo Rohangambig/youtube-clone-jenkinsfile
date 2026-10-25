@@ -29,10 +29,9 @@ pipeline {
                         returnStdout: true
                     ).trim()
 
-                   env.APP_IMAGE = "rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp}"
+                    // Explicitly update the global env variable
+                    env.APP_IMAGE = "rohanambig/youtube-user-service:${BUILD_NUMBER}-${timestamp}"
 
-                    echo "Docker image: ${env.APP_IMAGE}"
-                    
                     sh "docker build -t ${env.APP_IMAGE} ."
                 }
             }
@@ -47,12 +46,13 @@ pipeline {
                         passwordVariable: 'DOCKER_PASSWORD'
                     )
                 ]) {
-                    sh '''
+                    // Use double quotes (""") so Groovy interpolates ${env.APP_IMAGE}
+                    sh """
                         set +x
                         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                        docker push "$APP_IMAGE"
+                        docker push "${env.APP_IMAGE}"
                         docker logout
-                    '''
+                    """
                 }
             }
         }
